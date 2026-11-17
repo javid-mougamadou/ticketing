@@ -1,0 +1,25 @@
+<div id="comments-section">
+  <h2 class="mb-3 text-lg font-semibold">Comments</h2>
+  <ul class="mb-4 space-y-3">
+    {% for comment in ticket.comments.all %}
+    <li class="rounded-md bg-slate-100 p-3 text-sm">
+      <p class="font-medium">{{ comment.author_name }}</p>
+      <p>{{ comment.comment }}</p>
+      <p class="mt-1 text-xs text-slate-500">{{ comment.created_date }}</p>
+    </li>
+    {% empty %}
+    <li class="text-sm text-slate-500">No comments yet.</li>
+    {% endfor %}
+  </ul>
+  <form
+    hx-post="{% url 'tickets:comment_create' ticket.pk %}"
+    hx-target="#comments-section"
+    hx-swap="outerHTML"
+    class="space-y-3"
+  >
+    {{ comment_form.as_p }}
+    <button type="submit" class="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">
+      Add comment
+    </button>
+  </form>
+</div>

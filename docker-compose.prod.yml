@@ -1,0 +1,11 @@
+services:
+  web:
+    command: ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+    environment:
+      DJANGO_DEBUG: "0"
+    # Code baké dans l'image en prod (aucun bind-mount).
+    volumes: !override []
+    # Caddy joint ce service par nom de conteneur sur le réseau `proxy`
+    # partagé (cf. playbook caddy-add-ticketing.yml) — aucun port n'a
+    # besoin d'être publié sur l'hôte en prod.
+    ports: !override []

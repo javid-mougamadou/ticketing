@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-2 text-2xl font-bold">#{{ ticket.id }} — {{ ticket.title }}</h1>
+<p class="mb-6 text-slate-600">{{ ticket.description }}</p>
+<p class="mb-6 text-sm text-slate-500">
+  Reported by {{ ticket.reporter_name }} · {{ ticket.get_priority_display }} priority ·
+  {{ ticket.category.name|default:"No category" }}
+</p>
+
+{% include "tickets/_status_panel.html" %}
+{% include "tickets/_comments.html" %}
+{% endblock %}

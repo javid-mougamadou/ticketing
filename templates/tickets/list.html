@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block content %}
+<h1 class="mb-6 text-2xl font-bold">Tickets</h1>
+
+<form id="filter-form"
+      hx-get="{% url 'tickets:ticket_list' %}"
+      hx-trigger="change"
+      hx-target="#ticket-table"
+      hx-swap="outerHTML"
+      class="mb-6 flex flex-wrap gap-4">
+  <div>
+    <label class="block text-sm font-medium">Status</label>
+    {{ filter_form.status }}
+  </div>
+  <div>
+    <label class="block text-sm font-medium">Priority</label>
+    {{ filter_form.priority }}
+  </div>
+  <div>
+    <label class="block text-sm font-medium">Category</label>
+    {{ filter_form.category }}
+  </div>
+</form>
+
+{% include "tickets/_ticket_table.html" %}
+{% endblock %}
