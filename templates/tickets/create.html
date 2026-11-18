@@ -4,10 +4,21 @@
 
 {% block content %}
 <h1 class="mb-6 text-2xl font-bold">New ticket</h1>
-<form method="post" class="max-w-xl space-y-4">
+<form method="post" class="flex max-w-xl flex-col gap-4">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">
+  {% for field in form %}
+  <div class="flex flex-col gap-1">
+    <label for="{{ field.id_for_label }}" class="text-sm font-medium text-slate-700">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}
+    <p class="text-xs text-slate-500">{{ field.help_text }}</p>
+    {% endif %}
+    {% for error in field.errors %}
+    <p class="text-xs text-red-600">{{ error }}</p>
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <button type="submit" class="self-start rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">
     Create
   </button>
 </form>

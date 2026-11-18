@@ -32,7 +32,7 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 ## Quality & Testing
 
 ```bash
-docker compose run --rm --entrypoint "" web pytest
+docker compose run --rm web pytest
 ```
 
 ## Features

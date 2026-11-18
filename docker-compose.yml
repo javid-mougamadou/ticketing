@@ -25,11 +25,16 @@ services:
         condition: service_healthy
     ports:
       - "8010:8000"
+    # Bind-mount seulement le code source (pas static/dist ni staticfiles,
+    # générés au build Docker -- un volume anonyme resterait périmé d'un
+    # rebuild à l'autre, contrairement à un répertoire simplement absent
+    # du bind-mount).
     volumes:
-      - .:/app
-      # Préserve le CSS Tailwind compilé par le build Docker (sinon masqué
-      # par le bind-mount, qui n'a pas static/dist côté hôte).
-      - /app/static/dist
+      - ./manage.py:/app/manage.py
+      - ./config:/app/config
+      - ./tickets:/app/tickets
+      - ./templates:/app/templates
+      - ./static/src:/app/static/src
 
 volumes:
   pgdata:

@@ -15,10 +15,18 @@
     hx-post="{% url 'tickets:comment_create' ticket.pk %}"
     hx-target="#comments-section"
     hx-swap="outerHTML"
-    class="space-y-3"
+    class="flex max-w-xl flex-col gap-3"
   >
-    {{ comment_form.as_p }}
-    <button type="submit" class="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">
+    {% for field in comment_form %}
+    <div class="flex flex-col gap-1">
+      <label for="{{ field.id_for_label }}" class="text-sm font-medium text-slate-700">{{ field.label }}</label>
+      {{ field }}
+      {% for error in field.errors %}
+      <p class="text-xs text-red-600">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="self-start rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">
       Add comment
     </button>
   </form>
